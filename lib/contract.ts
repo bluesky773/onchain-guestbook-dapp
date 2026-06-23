@@ -1,7 +1,7 @@
 // On-chain Guestbook contract config.
 // Replace GUESTBOOK_ADDRESS with your deployed contract address on Sepolia.
 
-export const GUESTBOOK_ADDRESS = "0x0000000000000000000000000000000000000000" as const
+export const GUESTBOOK_ADDRESS = "0x68E3668a999958161eC4D64FC623A643ab3499e1" as const
 
 // Expected Solidity interface:
 //
@@ -10,39 +10,86 @@ export const GUESTBOOK_ADDRESS = "0x0000000000000000000000000000000000000000" as
 // function getEntries() external view returns (Entry[] memory);
 export const GUESTBOOK_ABI = [
   {
-    type: "function",
-    name: "sign",
-    stateMutability: "nonpayable",
-    inputs: [{ name: "message", type: "string" }],
-    outputs: [],
-  },
-  {
-    type: "function",
-    name: "getEntries",
-    stateMutability: "view",
-    inputs: [],
-    outputs: [
+    "anonymous": false,
+    "inputs": [
       {
-        name: "",
-        type: "tuple[]",
-        components: [
-          { name: "sender", type: "address" },
-          { name: "message", type: "string" },
-          { name: "timestamp", type: "uint256" },
-        ],
+        "indexed": true,
+        "internalType": "address",
+        "name": "author",
+        "type": "address"
       },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "message",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "timestamp",
+        "type": "uint256"
+      }
     ],
+    "name": "NewEntry",
+    "type": "event"
   },
   {
-    type: "event",
-    name: "Signed",
-    inputs: [
-      { name: "sender", type: "address", indexed: true },
-      { name: "message", type: "string", indexed: false },
-      { name: "timestamp", type: "uint256", indexed: false },
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "message",
+        "type": "string"
+      }
     ],
-    anonymous: false,
+    "name": "sign",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
+  {
+    "inputs": [],
+    "name": "getEntries",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "author",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "message",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "timestamp",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct Guestbook.Entry[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "total",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
 ] as const
 
 export type GuestbookEntry = {

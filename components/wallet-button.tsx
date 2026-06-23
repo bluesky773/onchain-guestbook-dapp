@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import { useAccount, useConnect, useDisconnect } from "wagmi"
 import { injected } from "wagmi/connectors"
 import { Button } from "@/components/ui/button"
@@ -10,6 +11,19 @@ export function WalletButton() {
   const { address, isConnected } = useAccount()
   const { connect, isPending } = useConnect()
   const { disconnect } = useDisconnect()
+
+  // 서버와 클라이언트의 첫 렌더 출력을 일치시켜 하이드레이션 불일치를 방지한다.
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
+
+  if (!mounted) {
+    return (
+      <Button size="sm" disabled>
+        <Wallet className="size-4" />
+        지갑 연결
+      </Button>
+    )
+  }
 
   if (isConnected && address) {
     return (

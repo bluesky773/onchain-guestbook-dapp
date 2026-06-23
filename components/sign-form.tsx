@@ -8,8 +8,13 @@ import { GUESTBOOK_ABI, GUESTBOOK_ADDRESS } from "@/lib/contract"
 import { Loader2, PenLine } from "lucide-react"
 
 export function SignForm({ onConfirmed }: { onConfirmed?: () => void }) {
-  const { isConnected } = useAccount()
+  const { isConnected: accountConnected } = useAccount()
   const [message, setMessage] = useState("")
+
+  // 마운트 전에는 서버와 동일하게 미연결 상태로 취급해 하이드레이션 불일치를 막는다.
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
+  const isConnected = mounted && accountConnected
 
   const { data: hash, writeContract, isPending, error, reset } = useWriteContract()
 
