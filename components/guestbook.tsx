@@ -2,6 +2,7 @@
 
 import { useCallback, useRef } from "react"
 import { WalletButton } from "@/components/wallet-button"
+import { ThemeToggle } from "@/components/theme-toggle"
 import { SignForm } from "@/components/sign-form"
 import { EntriesList, type EntriesListHandle } from "@/components/entries-list"
 import { Card, CardContent } from "@/components/ui/card"
@@ -20,7 +21,10 @@ export function Guestbook() {
           <h1 className="text-2xl font-bold tracking-tight text-balance">온체인 방명록</h1>
           <p className="text-sm text-muted-foreground">Sepolia 테스트넷에 메시지를 영원히 남겨보세요.</p>
         </div>
-        <WalletButton />
+        <div className="flex items-center gap-2">
+          <WalletButton />
+          <ThemeToggle />
+        </div>
       </header>
 
       <Card>
